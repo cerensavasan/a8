@@ -47,27 +47,38 @@ h3 {
 </head>
 <body>
   <h1> BADYAK </h1>
+  <form>
+    New Post:
+    <input type='text' id="messageBox" name="message">
+    <button type='button' onclick="sendMessage();" name="sButton">
+  </form>
 </body>
 
 <script>
-  
-//random number generator
-var num = Math.floor(Math.random() * 90000) + 10000;
-var randID = num.toString();
+//is there already a cookie?
+var alreadyExists = false;
+if (document.cookie.indexOf("cookieID") >= 0) {
+  alreadyExists = true;
+}
+console.log(alreadyExists);
 
-// sets the cookie cookieID
-document.cookie = "cookieID=" + randID;
+//random number generator if there is no cookie
+if(alreadyExists === false){
+  var num = Math.floor(Math.random() * 90000) + 10000;
+  var randID = num.toString();
+  // sets the cookie cookieID
+  document.cookie = "cookieID=" + randID;
+  console.log("Cookie set is: " + randID);
+}
 
+//open request to send cookie ID and get content
 var req = new XMLHttpRequest();
-
-req.open("GET", "/content");
+var randID = getCookie("cookieID");
+console.log("Sending to server cookie id: " + randID + " of type: " + typeof randID);
 
 req.onreadystatechange = function() {
   handleRes(req);
 }
-
-console.log("Sending to server cookie id: " + randID);
-req.send('randomID='+ randID);
 
 function handleRes(req) {
   if( req.readyState !== XMLHttpRequest.DONE )
@@ -77,5 +88,32 @@ function handleRes(req) {
     document.querySelector("body").innerHTML += req.responseText;
 }
 
+req.open("POST", "/content");
+req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+req.send("theid=" + randID);
+
+//retrieve cookie by name
+function getCookie(name) {
+  var value = "; " + document.cookie;
+  var parts = value.split("; " + name + "=");
+  if (parts.length == 2) return parts.pop().split(";").shift();
+}
+
+//DEALING WITH MESSAGES
+function sendMessage(){
+  var elVal = document.getElementById('messageBox').value;
+  console.log("Message clicked: " + elVal + " of type: " + typeof elVal);
+  var messageRec = elVal;  
+  
+  var req = new XMLHttpRequest();
+  req.onreadystatechange = function() {
+    handleRes(req);
+  }
+
+  req.open("POST", "/message");
+  req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  req.send("theid=" + randID + "&messager=" + messageRec);
+
+}
 </script>
 </html>

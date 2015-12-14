@@ -11,30 +11,23 @@ var app = express();
 var port = process.env.PORT || 3000;
 app.use(express.static(path.join(__dirname)));
 
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+
 //DECLARING ARRAYS FOR TEMPLATES
 var posts = [
 {
-  order: "1",
-  body: "Final exam has been cancelled, instead we will only have project presentations on December 17th.",
-  timestamp: "December 4th, 2015, 15:35",
-  author: "Lane Harrison",
-},
-{
-  order: "2",
-  body: "Exam 2 grades have been sent out. Please check your answers and come to office hours if you wish to discuss your grades.",
-  timestamp: "December 2nd, 2015, 11:09",
-  author: "Lane Harrison",
-},
-{
-  order: "3",
-  body: "The office hours for Wednesday have been cancelled due to severe snow storms.",
-  timestamp: "December 1st, 2015, 03:40",
-  author: "TAs",
+  body: "Test Post",
+  author: "82959",
 }
 ]
 
-
 app.get('/', function(req, res) {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+app.post('/', function(req, res) {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
@@ -42,17 +35,19 @@ app.get('/index.html', function(req, res) {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-app.get('/content', function(req, res) {
+app.post('/content', function(req, res) {
   sendContent(req,res);
+});
+
+app.post('/message', function(req, res) {
+  updateMessage(req,res);
 });
 
 // send big block of html via templates
 function sendContent(req, res) {
-
 //Received cookie
-var cookieID = req.body.randomID;
+var cookieID = req.body.theid;
 console.log("Cookie is: " + cookieID);
-
 
 var str = "";
 str +=  "<h1>Posts:</h1>";
@@ -64,6 +59,21 @@ posts.forEach( function(p) {
 res.end(str);
 }
 
+function updateMessage(req, res) {
+//Received cookie
+var cookieID = req.body.theid;
+console.log("Cookie is: " + cookieID);
+//Received message
+var sentMess = req.body.messager;
+console.log("Message is: " + sentMess + " of type: " + typeof sentMess);
+
+var str = "";
+//populate with posts
+posts.push({body: sentMess, author: cookieID,});
+str += postsFile.Compiled(posts.slice(-1).pop()); //send last post added
+//send giant string of html
+res.end(str);
+}
 
 app.listen(port, function() {
   console.log('App is listening on port ' + port);

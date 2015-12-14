@@ -1,0 +1,100 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://underscorejs.org/underscore-min.js"> </script>
+<!DOCTYPE><html><head>
+  
+<style>
+  
+/* Main Document Styling */ 
+html {
+  background: #FFE3AA;
+  font-family: Sans-Serif;
+  line-height: 1.4;
+}
+
+h1 {
+  margin-top: 30px;
+  font-weight: bold;
+  color: #AA3939;
+  text-align: left;
+  clear: both;
+}  
+
+h2 {
+  font-weight: bold;
+  font-size: 1.5em;
+  margin: 0 0 0.5em 0;
+}  
+
+h3 {
+  font-weight: bold;
+  margin: 0 0 0.5em 0;
+}  
+
+/* Part 1: Individual Grades */ 
+.students{
+  margin-right: 10px;
+  background-color: white;
+  display: inline-block;
+  text-indent: 15px;
+  width: 230px;
+  float: left;
+  margin-bottom: 10px;
+}
+
+.catimg {
+  margin-top: 10px;
+  width: 200px;
+  height: 170px;
+}
+
+/* Part 2: General Grade Reports */
+.report {
+  margin-top: 10px;
+  clear: both;
+  background-color: #D49A6A; 
+  width: 500px;
+  text-indent: 15px;
+}
+
+
+/* Part 3: Announcements */
+.announce {
+  background-color: #D49A6A;
+  border-color: black; 
+}
+
+.message {
+  clear: left;
+  background-color: white;
+  border-width: 5px;
+  border-color: black;
+}
+
+</style>
+</head>
+<body>
+  <h1> GRADES FOR WEBWARE A'15 </h1>
+</body>
+
+<script>
+
+var req = new XMLHttpRequest();
+
+req.open("GET", "/content");
+
+req.onreadystatechange = function() {
+  handleRes(req);
+}
+
+req.send();
+
+function handleRes(req) {
+  if( req.readyState !== XMLHttpRequest.DONE )
+    return;
+
+  if(req.status === 200)
+    document.querySelector("body").innerHTML += req.responseText;
+}
+
+</script>
+</html>

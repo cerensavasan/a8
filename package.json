@@ -1,16 +1,16 @@
 {
   "name": "a7",
   "version": "0.0.1",
-  "description": "WPI CS 4241 Assignment 7",
+  "description": "WPI CS 4241 assignment 7",
   "author": "Ceren Savasan",
   "private": true,
   "scripts": {
-    "start": "node Server.js"
+    "start": "node index.js"
   },
   "dependencies": {
     "express": "~4.9.0"
   },
-  "main": "Server.js",
+  "main": "index.js",
   "devDependencies": {},
   "keywords": [
     "heroku"

@@ -4,6 +4,7 @@ var express = require('express')
   , url = require("url")
   , path = require("path")
   , postsFile = require("./post.js")
+  , bodyParser = require('body-parser')
 
 //SETTING UP SERVER
 var app = express();
@@ -47,6 +48,12 @@ app.get('/content', function(req, res) {
 
 // send big block of html via templates
 function sendContent(req, res) {
+
+//Received cookie
+var cookieID = req.body.randomID;
+console.log("Cookie is: " + cookieID);
+
+
 var str = "";
 str +=  "<h1>Posts:</h1>";
 //populate with posts
@@ -54,7 +61,7 @@ posts.forEach( function(p) {
  str += postsFile.Compiled(p);
 })
 //send giant string of html
-res.end( str );
+res.end(str);
 }
 
 

@@ -30,35 +30,8 @@ h3 {
   margin: 0 0 0.5em 0;
 }  
 
-/* Part 1: Individual Grades */ 
-.students{
-  margin-right: 10px;
-  background-color: white;
-  display: inline-block;
-  text-indent: 15px;
-  width: 230px;
-  float: left;
-  margin-bottom: 10px;
-}
-
-.catimg {
-  margin-top: 10px;
-  width: 200px;
-  height: 170px;
-}
-
-/* Part 2: General Grade Reports */
-.report {
-  margin-top: 10px;
-  clear: both;
-  background-color: #D49A6A; 
-  width: 500px;
-  text-indent: 15px;
-}
-
-
-/* Part 3: Announcements */
-.announce {
+/* Posts */
+.posts {
   background-color: #D49A6A;
   border-color: black; 
 }
@@ -73,10 +46,17 @@ h3 {
 </style>
 </head>
 <body>
-  <h1> GRADES FOR WEBWARE A'15 </h1>
+  <h1> BADYAK </h1>
 </body>
 
 <script>
+  
+//random number generator
+var num = Math.floor(Math.random() * 90000) + 10000;
+var randID = num.toString();
+
+// sets the cookie cookieID
+document.cookie = "cookieID=" + randID;
 
 var req = new XMLHttpRequest();
 

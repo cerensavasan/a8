@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+  <script src="jquery-1.11.3.min.js"></script>
+  <script src="Server.js"></script>
+  <style>
+    .square {
+        width: 100px;
+        height: 100px;
+        border-style: solid;
+        border-width: 5px;
+        border-color: #0d0d0d;
+        margin: 5px;
+        display: table-cell;
+     }
+     .haiku {
+        font-size: 300%;
+        color: #004d66;
+        text-align: center;
+     }
+     
+   </style>
+  </head>
+ <body background="back.jpg">
+   <h1 align= "center">Click the squares to create a pattern:</h1>
+   <section>
+     <button onclick="resetSquares()">Reset Squares</button>
+     <button onclick="randomizeSquares()">Randomize Squares</button>
+     <button onclick="scrollSquares()">Scroll On</button>
+     <button onclick="endScrollSquares()">Scroll Off</button>
+   </section>
+   <section>
+   </section>
+<script>
+  //Generate table of squares
+  var colors;
+  var setScroll = false;
+  
+  $(document).ready(function(){
+    $('body').append('<div id="container" display="table">');
+    for(j = 0; j < 8; j++) {
+      $('body').append('<div id="row' + j + '" display="table-row">');
+      for(i = 0; i < 8; i++) {
+        $('body').append('<div class="square"></div>');
+      }
+    }
+    
+    $('body').append('<div>');
+      $('body').append('<p class="haiku">I deployed</p>');
+      $('body').append('<p class="haiku">Until it failed</p>');
+      $('body').append('<p class="haiku">Rest is history</p>');
+    $('body').append('</div>');
+    
+   var squares = document.getElementsByClassName('square');
+   for(var i = 0; i < squares.length; i++) {
+    squares[i].style.backgroundColor = "rgb(0,0,0)";
+    squares[i].addEventListener("click", changeColor);
+   }
+  });
+  
+
+
+function randomizeSquares() {
+  console.log("randomizeSquares start");
+  var randomizingSquares = document.getElementsByClassName('square');
+  for(var i = 0; i < randomizingSquares.length; i++) {
+    var randomRed = Math.floor(Math.random() * 255);
+    var randomGreen = Math.floor(Math.random() * 255);
+    var randomBlue = Math.floor(Math.random() * 255);
+    //create the string that is the ‘random color’
+    var randomColor = "rgb("+randomRed+","+randomGreen+","+randomBlue+")";
+    console.log("new color generated");
+    randomizingSquares[i].style.backgroundColor = randomColor;
+   }
+}
+
+function resetSquares() {
+  var resetSquares = document.getElementsByClassName('square');
+  for(var i = 0; i < resetSquares.length; i++) {
+    resetSquares[i].style.backgroundColor = "rgb(0,0,0)";
+   }
+}
+function scrollSquares() {
+   var scrollSquaresEl = document.getElementsByClassName('square');
+   for(var i = 0; i < scrollSquaresEl.length; i++) {
+    scrollSquaresEl[i].addEventListener("mouseover", changeColor, true);
+   }
+   setScroll = true;
+}
+
+function endScrollSquares() {
+   var endScrollSquaresEl = document.getElementsByClassName('square');
+   if(setScroll === true){
+     for(var i = 0; i < endScrollSquaresEl.length; i++) {
+       endScrollSquaresEl[i].removeEventListener("mouseover", changeColor, true); 
+     }
+   }
+}
+
+function changeColor(event) {
+  this.style.backgroundColor = randomColor();
+}
+
+function randomColor() {
+
+var randomRed = Math.floor(Math.random() * 255);
+var randomGreen = Math.floor(Math.random() * 255);
+var randomBlue = Math.floor(Math.random() * 255);
+//create the string that is the ‘random color’
+var randomColor = "rgb("+randomRed+","+randomGreen+","+randomBlue+")";
+
+return randomColor;
+
+}
+</script>
+</body>
+</html>

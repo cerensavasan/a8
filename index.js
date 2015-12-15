@@ -23,40 +23,66 @@ var posts = [
 }
 ]
 
-app.get('/', function(req, res) {
-  res.sendFile(path.join(__dirname, 'index.html'));
-});
-
 app.post('/', function(req, res) {
+  console.log("POST / DONE");
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 app.get('/index.html', function(req, res) {
+    console.log("GET /INDEX.HTML DONE");
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 app.post('/content', function(req, res) {
+  console.log("POST /CONTENT DONE");
   sendContent(req,res);
 });
 
 app.post('/message', function(req, res) {
+  console.log("POST /MESSAGE DONE");
   updateMessage(req,res);
 });
 
+var alreadyParsed = false;
+
 // send big block of html via templates
 function sendContent(req, res) {
-//Received cookie
-var cookieID = req.body.theid;
-console.log("Cookie is: " + cookieID);
+  if(alreadyParsed === false){
+    //Received cookie
+    var cookieID = req.body.theid;
+    console.log("Cookie is: " + cookieID);
 
-var str = "";
-str +=  "<h1>Posts:</h1>";
-//populate with posts
-posts.forEach( function(p) {
- str += postsFile.Compiled(p);
-})
-//send giant string of html
-res.end(str);
+    //get the comments already in server
+    var commentsArray = fs.readFileSync('comments.txt').toString().trim().split("\n");
+    var idsArray = fs.readFileSync('ids.txt').toString().trim().split("\n");
+    var i = 0;
+
+    commentsArray.forEach( function(p) {
+      posts.push({body: p, author: idsArray[i],})
+      i += 1;
+    });
+
+
+    var str = "";
+    str +=  "<h1>Posts:</h1>";
+    //populate with posts
+    posts.forEach( function(p) {
+      str += postsFile.Compiled(p);
+    })
+    //send giant string of html
+    res.end(str);
+    alreadyParsed = true;
+  }
+  else{
+    var str2 = "";
+    str2 +=  "<h1>Posts:</h1>";
+    //populate with posts
+    posts.forEach( function(p) {
+      str2 += postsFile.Compiled(p);
+    })
+    //send giant string of html
+    res.end(str2);   
+  }
 }
 
 function updateMessage(req, res) {
@@ -70,8 +96,21 @@ console.log("Message is: " + sentMess + " of type: " + typeof sentMess);
 var str = "";
 //populate with posts
 posts.push({body: sentMess, author: cookieID,});
-str += postsFile.Compiled(posts.slice(-1).pop()); //send last post added
-//send giant string of html
+//send last post added
+var lastPost = posts.slice(-1).pop();
+str += postsFile.Compiled(lastPost);
+
+
+//TODO ADD POST AND ID TO THE TEXT FILES
+var commentsArray = fs.readFileSync('comments.txt').toString().trim().split("\n");
+var idsArray = fs.readFileSync('ids.txt').toString().trim().split("\n");
+commentsArray.push(sentMess);
+idsArray.push(cookieID);
+
+fs.writeFileSync('comments.txt', commentsArray.join('\n'));
+fs.writeFileSync('ids.txt', idsArray.join('\n'));
+
+//send string with the last post to be added to innerhtml
 res.end(str);
 }
 

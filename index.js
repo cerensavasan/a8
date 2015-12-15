@@ -64,7 +64,6 @@ function sendContent(req, res) {
 
 
     var str = "";
-    str +=  "<h1>Posts:</h1>";
     //populate with posts
     posts.forEach( function(p) {
       str += postsFile.Compiled(p);
@@ -75,7 +74,6 @@ function sendContent(req, res) {
   }
   else{
     var str2 = "";
-    str2 +=  "<h1>Posts:</h1>";
     //populate with posts
     posts.forEach( function(p) {
       str2 += postsFile.Compiled(p);

@@ -3,6 +3,32 @@
 <!DOCTYPE><html><head>
   
 <style>
+ 
+table {
+  font-family: 'Arial';
+  margin: 25px auto;
+  border-collapse: collapse;
+  border: 1px solid #eee;
+  border-bottom: 2px solid #00cccc;
+  background: white;
+  box-shadow: 0px 0px 20px rgba(0,0,0,0.10),
+     0px 10px 20px rgba(0,0,0,0.05),
+     0px 20px 20px rgba(0,0,0,0.05),
+     0px 30px 20px rgba(0,0,0,0.05);
+}
+
+th, td {
+    color: #999;
+    border: 1px solid #eee;
+    padding: 12px 35px;
+    border-collapse: collapse;
+}
+th {
+    background: #00cccc;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 12px;
+}
   
 /* Main Document Styling */ 
 html {
@@ -12,12 +38,13 @@ html {
 }
 
 h1 {
-  margin-top: 30px;
-  font-weight: bold;
-  color: #AA3939;
-  background: #FFE3AA;
-  text-align: left;
-  clear: both;
+    text-align: center;
+    font-family: "League-Gothic", Courier;
+    font-size: 200px;
+    text-transform: uppercase;
+    color: #fff;
+    text-shadow: 10px 10px 0 #ffd217, 20px 20px 0 #5ac7ff, 30px 30px 0 #ffd217, 40px 40px 0 #5ac7ff;
+    margin-bottom: -50px;
 }  
 
 h2 {
@@ -31,17 +58,85 @@ h3 {
   margin: 0 0 0.5em 0;
 }  
 
-/* Posts */
-.posts {
-  background-color: #D49A6A;
-  border-color: black; 
+.myButton {
+	-moz-box-shadow:inset 0px 1px 0px 0px #fccf97;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #fccf97;
+	box-shadow:inset 0px 1px 0px 0px #fccf97;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #f5a23d), color-stop(1, #ffd217));
+	background:-moz-linear-gradient(top, #f5a23d 5%, #ffd217 100%);
+	background:-webkit-linear-gradient(top, #f5a23d 5%, #ffd217 100%);
+	background:-o-linear-gradient(top, #f5a23d 5%, #ffd217 100%);
+	background:-ms-linear-gradient(top, #f5a23d 5%, #ffd217 100%);
+	background:linear-gradient(to bottom, #f5a23d 5%, #ffd217 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f5a23d', endColorstr='#fabc00',GradientType=0);
+	background-color:#f5a23d;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	border:1px solid #ebb734;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #cca816;
+  margin-top: -20px;
+}
+.myButton:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #fabc00), color-stop(1, #f5a23d));
+	background:-moz-linear-gradient(top, #fabc00 5%, #f5a23d 100%);
+	background:-webkit-linear-gradient(top, #fabc00 5%, #f5a23d 100%);
+	background:-o-linear-gradient(top, #fabc00 5%, #f5a23d 100%);
+	background:-ms-linear-gradient(top, #fabc00 5%, #f5a23d 100%);
+	background:linear-gradient(to bottom, #fabc00 5%, #f5a23d 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fabc00', endColorstr='#f5a23d',GradientType=0);
+	background-color:#fabc00;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
 }
 
-.message {
+.author {
   clear: left;
-  background-color: white;
+  background-color: skyblue;
   border-width: 5px;
   border-color: black;
+  border-bottom: 1px solid grey;
+  margin-top: -1px;
+  height: 27px;
+}
+
+#messageBox {
+  width: 600px;
+	height: 120px;
+	border: 3px solid #cccccc;
+	padding: 5px;
+	font-family: Tahoma, sans-serif;
+	background-position: bottom right;
+	background-repeat: no-repeat;
+  resize: none;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.titleOfPost {
+    color: #5ac7ff;
+    font-family: proxima-nova-1, proxima-nova-2, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 35px;
+    font-weight: bold;
+    text-shadow: white 3px 3px;
+    margin-bottom: -2px;
+    text-align: center;
+}
+
+.buttonDiv{
+  text-align:center;
+  margin:auto;
 }
 
 </style>
@@ -49,11 +144,12 @@ h3 {
 <body>
   <h1> BADYAK </h1>
   <form>
-    New Post:
-    <input type='text' id="messageBox" name="message">
-    <button type='button' onclick="sendMessage();" name="sButton">Post</button>
+    <p class="titleOfPost">New Post:</p>
+    <textarea type='text' id="messageBox" name="message" height="200px"></textarea><br>
+    <div class="buttonDiv"><button type='button' onclick="sendMessage();" name="myButton" class="myButton">Post</button></div>
   </form>
 </body>
+<p class='titleOfPost'>Posts:</p>
 <section>
   <div class="posts"></div>
 </section>

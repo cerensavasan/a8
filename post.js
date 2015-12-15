@@ -1,9 +1,9 @@
 var _ = require("underscore");
 
-var compiled = "<div class='posts'>" +
-  "<p class='message'><b>Message: </b> <%= body %> </p>" +
-  "<p class='author'><b>Posted by: </b> <%= author %> </p>" +
-  "<br></br>" +
+var compiled = "<div class='posts'>" + "<table>" + "<tr>" +
+  "<td><b>Message: </b> <%= body %> </td>" +
+  "<td><b>Posted by: </b> <%= author %> </td>" + "</tr>" +
+  "</table" +
 "</div>";
 
 exports.Compiled = _.template(compiled);

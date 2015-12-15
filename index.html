@@ -19,6 +19,8 @@ table {
 
 th, td {
     color: #999;
+    max-width: 900px;
+    word-wrap: break-word;
     border: 1px solid #eee;
     padding: 12px 35px;
     border-collapse: collapse;
@@ -148,8 +150,9 @@ h3 {
     <textarea type='text' id="messageBox" name="message" height="200px"></textarea><br>
     <div class="buttonDiv"><button type='button' onclick="sendMessage();" name="myButton" class="myButton">Post</button></div>
   </form>
+  <hr>
 </body>
-<p class='titleOfPost'>Posts:</p>
+<p class='titleOfPost' style="margin-top: -10px">Posts:</p>
 <section>
   <div class="posts"></div>
 </section>
